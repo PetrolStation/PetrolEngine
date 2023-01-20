@@ -1,0 +1,3 @@
+[submodule "src/PetrolEngineGLFW/deps/glfw"]
+	path = src/PetrolEngineGLFW/deps/glfw
+	url = https://github.com/glfw/glfw
