@@ -83,6 +83,12 @@ set(HEADER_FILES)
 set(INCLUDE_DIRS)
 set(STATIC_LIBS )
 
+# install and build directories
+
+find_package (Python COMPONENTS Interpreter Development)
+
+execute_process(COMMAND ${Python_EXECUTABLE} ${CMAKE_SOURCE_DIR}/install.py ${USE_ADDONS} COMMAND_ECHO STDOUT)
+
 FILE(GLOB __SRC__ src/*)
 FOREACH(dir ${__SRC__})
   IF(IS_DIRECTORY ${dir})
