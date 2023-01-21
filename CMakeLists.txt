@@ -87,7 +87,7 @@ set(STATIC_LIBS )
 
 find_package (Python COMPONENTS Interpreter Development)
 
-execute_process(COMMAND ${Python_EXECUTABLE} ${CMAKE_SOURCE_DIR}/install.py ${USE_ADDONS} COMMAND_ECHO STDOUT)
+execute_process(COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/install.py ${USE_ADDONS} COMMAND_ECHO STDOUT)
 
 FILE(GLOB __SRC__ src/*)
 FOREACH(dir ${__SRC__})
