@@ -122,6 +122,7 @@ foreach(ADDON ${ADDONS})
     IF(${${ADDON}_MODE} STREQUAL "patch")
         list(APPEND SOURCE_FILES ${${ADDON}_SOURCE_FILES})
         list(APPEND STATIC_LIBS ${${ADDON}_LIBRARIES})
+        list(FILTER STATIC_LIBS EXCLUDE REGEX "PRIVATE")
     ELSEIF(${${ADDON}_MODE} STREQUAL "static")
         # TODO: Add static library support
         list(APPEND STATIC_LIBS ${ADDON})
@@ -131,8 +132,12 @@ endforeach()
 add_library(PetrolEngine ${SOURCE_FILES} ${HEADER_FILES})
 set_property(TARGET PetrolEngine PROPERTY CXX_STANDARD 17)
 link_libraries(PetrolEngine ${STATIC_LIBS})
+set(STATIC_LIBS ${STATIC_LIBS} PARENT_SCOPE)
 
-include_directories(PetrolEngine
+target_include_directories(PetrolEngine
     PUBLIC src
     PUBLIC ${INCLUDE_DIRS}
 )
+
+set(PETROL_ENGINE_INCLUDE ${INCLUDE_DIRS} PARENT_SCOPE)
+

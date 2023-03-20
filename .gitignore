@@ -1,6 +1,7 @@
 cmake-build-*
 build
 .idea
-**/.DS_Store
 src/*
+!src/Core
+**/.DS_Store
 !src/README.md
