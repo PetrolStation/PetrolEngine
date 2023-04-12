@@ -131,6 +131,9 @@ endforeach()
 
 add_library(PetrolEngine ${SOURCE_FILES} ${HEADER_FILES})
 set_property(TARGET PetrolEngine PROPERTY CXX_STANDARD 17)
+
+#target_compile_features(PetrolEngine PUBLIC cxx_std_23)
+
 link_libraries(PetrolEngine ${STATIC_LIBS})
 set(STATIC_LIBS ${STATIC_LIBS} PARENT_SCOPE)
 
