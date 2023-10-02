@@ -29,7 +29,7 @@ def multithread(function, list_of_arg_lists):
         thread.join()
 
 def install(url):
-    if os.path.isfile(sourcePath + url + ".lock") or os.path.isdir(sourcePath + url):
+    if os.path.isfile(sourcePath + url + ".lock"):
         while os.path.isfile(sourcePath + url + ".lock"):
             sleep(0.1)
         return
@@ -46,7 +46,10 @@ def install(url):
     print("Installing " + resp['name'] + "...")
 
     try:
-        subprocess.check_call(["git", "clone", "--quiet", "--recursive", "https://github.com/PetrolStation/" + url, sourcePath + resp['name']], stdout=subprocess.DEVNULL)
+        if(os.path.isdir(sourcePath + resp['name'])):
+            subprocess.check_call(["git", "pull"], cwd=sourcePath + resp['name'], stdout=subprocess.DEVNULL)
+        else:
+            subprocess.check_call(["git", "clone", "--quiet", "--recursive", "https://github.com/PetrolStation/" + url, sourcePath + resp['name']], stdout=subprocess.DEVNULL)
     except:
         while os.path.isfile(sourcePath + url + ".lock"):
             sleep(0.1)
