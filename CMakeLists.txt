@@ -143,4 +143,4 @@ target_include_directories(PetrolEngine
 )
 
 set(PETROL_ENGINE_INCLUDE ${INCLUDE_DIRS} PARENT_SCOPE)
-
+execute_process(COMMAND cloc ${SOURCE_FILES} ${HEADER_FILES})
