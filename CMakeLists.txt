@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 3.16)
 
 # * = all in src folder
 set(USE_ADDONS "*" CACHE STRING "List of addons to use (git urls)")
+set(CMAKE_DISABLE_SOURCE_CHANGES  ON)
 
 message(STATUS "Using addons: ${USE_ADDONS}")
 
@@ -129,8 +130,47 @@ foreach(ADDON ${ADDONS})
     ENDIF()
 endforeach()
 
+set_property(GLOBAL PROPERTY ATTRIBUTES_PY "${CMAKE_CURRENT_SOURCE_DIR}/attributes.py")
+
+function(implement_attributes projectt)
+    get_target_property(target_type ${projectt} TYPE)
+    if (NOT target_type STREQUAL "EXECUTABLE")
+        return()
+    endif ()
+    get_target_property(headers ${projectt} SOURCES)
+    list(FILTER headers INCLUDE REGEX ".h$")
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/attrsInclude)
+    get_property(ATTRIBUTES_PY GLOBAL PROPERTY ATTRIBUTES_PY)
+    get_target_property(includeDirs ${projectt} INCLUDE_DIRECTORIES)
+
+    foreach(dir ${includeDirs})
+        File(GLOB_RECURSE CHEAD ${dir}/*.h)
+        list(APPEND headers ${CHEAD})
+    endforeach()
+
+    find_package (Python COMPONENTS Interpreter Development)
+    execute_process(COMMAND ${Python_EXECUTABLE} ${ATTRIBUTES_PY} ${headers} ${projectt} ${CMAKE_CURRENT_BINARY_DIR}/attrsInclude COMMAND_ECHO STDOUT)
+    set(attrsIncludeDir ${CMAKE_CURRENT_BINARY_DIR}/attrsInclude)
+    target_include_directories(${projectt} PRIVATE ${attrsIncludeDir})
+    target_sources(${projectt} PRIVATE ${attrsIncludeDir}/${projectt}Attributes.cpp)
+endfunction()
+
 add_library(PetrolEngine ${SOURCE_FILES} ${HEADER_FILES})
 set_property(TARGET PetrolEngine PROPERTY CXX_STANDARD 17)
+implement_attributes(PetrolEngine)
+target_include_directories(PetrolEngine PRIVATE attrsIncludeDir)
+if(MINGW)
+    set( ALSOFT_BACKEND_PIPEWIRE OFF CACHE BOOL "GLFW lib only" FORCE )
+    set( ALSOFT_REQUIRE_DSOUND ON CACHE BOOL "GLFW lib only" FORCE )
+endif()
+
+if( WIN32 AND NOT MINGW )
+    target_compile_definitions(PetrolEngine PUBLIC __IS_WINDOWS__=1)
+elseif( UNIX OR MINGW AND NOT APPLE )
+    target_compile_definitions(PetrolEngine PUBLIC __IS_LINUX__=1)
+elseif( APPLE )
+    target_compile_definitions(PetrolEngine PUBLIC __IS_APPLE__=1)
+endif()
 
 #target_compile_features(PetrolEngine PUBLIC cxx_std_23)
 
