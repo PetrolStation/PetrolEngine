@@ -349,11 +349,13 @@ def parseHeaders(files: list, output: str, name: str):
     newHeader = True
     newSource = True
 
-    with open(output+ "/" + name +"Attributes.h", 'r') as r:
-        if(r.read() == genDecs(attrs, name)): newHeader = False
+    if os.path.isfile(output+ "/" + name +"Attributes.h"):
+        with open(output+ "/" + name +"Attributes.h", 'r') as r:
+            if(r.read() == genDecs(attrs, name)): newHeader = False
 
-    with open(output+ "/" + name +"Attributes.cpp", 'r') as r:
-        if(r.read() == genDefs(attrs, usages, includes, name)): newSource = False
+    if os.path.isfile(output+ "/" + name +"Attributes.cpp"):
+        with open(output+ "/" + name +"Attributes.cpp", 'r') as r:
+            if(r.read() == genDefs(attrs, usages, includes, name)): newSource = False
         
     if(newHeader):
         with open(output+ "/" + name +"Attributes.h", 'w') as w:
