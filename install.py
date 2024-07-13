@@ -47,7 +47,7 @@ def install(url):
 
     try:
         if(os.path.isdir(sourcePath + resp['name'])):
-            subprocess.check_call(["git", "pull"], cwd=sourcePath + resp['name'], stdout=subprocess.DEVNULL)
+            subprocess.check_call(["git", "pull", "origin", "master"], cwd=sourcePath + resp['name'], stdout=subprocess.DEVNULL)
         else:
             subprocess.check_call(["git", "clone", "--quiet", "--recursive", "https://github.com/PetrolStation/" + url, sourcePath + resp['name']], stdout=subprocess.DEVNULL)
     except:
