@@ -1,37 +1,3 @@
-<style>
-#logo{text-align: center;}
-#logo span {font-size: 46px;}
-#logo img{
-    display: inline;
-    position: relative;
-    top: 16px;
-}
-</style>
-
-<div id="logo">
-<img src="https://raw.githubusercontent.com/iLikeTrioxin/PetrolEngine/master/Engine/Resources/fuel_distributor128.png" height="64">
-<span>Petrol engine</span>
-</div>
-
-<h4 align="center">Lead is a base repo to make your own petrol.</h4>
-
-<div style="text-align: center;">
-  <img src="https://img.shields.io/badge/C%2B%2B-17-brightgreen" alt="C++">
-  <img src="https://img.shields.io/gitlab/license/iLikeTrioxin/Lead?color=blue" alt="License">
-  <a href="https://yukiteru.xyz"><img src="https://img.shields.io/badge/My-Page-red" alt="Page"></a>
-</div>
-
-<div style="text-align: center;">
-  <a href="#about">About</a> •
-  <a href="#requirements">Requirements</a> •
-  <a href="#usage">Usage</a> •
-  <a href="#credits">Credits</a>
-</div>
-
-<div style="text-align: center;">
-<img src="https://cdn.discordapp.com/attachments/946029484014993418/1050479800734724147/2022_12_08_0wj_Kleki.png" alt="Example">
-</div>
-
 ## About
 
 Petrol Engine is a project that aims to be modular and fairly easy to use.
