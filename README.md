@@ -2,19 +2,15 @@
 
 Petrol Engine is a project that aims to be modular and fairly easy to use.
 To achieve this it is split into several parts:
-- Lead - a base repo to combine all the parts
+- PetrolEngine - a base repo to combine all the parts
 - PetrolEngineCore - the core of the engine
 - PetrolEngineOpenGL - most universal renderer API
-- PetrolEngineOpenAl - a audio API
-
-- PetrolEngineVulkan (WIP) - a renderer API that CAN speed up your app
-- PetrolEngineMoltenVK (WIP) - a renderer API for macOS
-- PetrolEngineEditor   (WIP) - a editor for the engine
-- PetrolEngineKazan    (WIP) - a software renderer for embedded systems
+- PetrolEngineOpenAl - audio API
+###### ... and more on the PetrolStation
 
 ## Requirements
 
-To build Lead you need the following tools:
+To build Petrol you need the following tools:
 - [CMake](https://cmake.org/) - build system
 - [Git](https://git-scm.com/) - version control system
 - [Python](https://www.python.org/) - scripting language
@@ -23,14 +19,13 @@ To build Lead you need the following tools:
 
 Clone the repo:
 ```
-git clone --recursive https://github.com/iLikeTrioxin/Lead
+git clone --recursive https://github.com/PetrolStation/PetrolEngine
 ```
 
 Now you can add petrol addons.
-To do so add a new line with the url of the github repo to the `addons` file.
+To do so set CMake variable USE_ADDONS with the urls of the their github repos or their names if they are in PetrolStation.
 ```
-# addons
-https://github.com/iLikeTrioxin/PetrolEngineVulkan
+set(USE_ADDONS Assimp Freetype OpenAL OpenGL GLFW ENet Bullet)
 ```
 
 If you use clion you can now open the project folder and it should everything for you.
